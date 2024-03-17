@@ -41,31 +41,30 @@ if (GAME_OPTIONS.Station_crystal_capacity < 0.1 || GAME_OPTIONS.Station_crystal_
 }
 
 const vocabulary = [
-    { text: "Attack",     icon: "\u0049", key: "A" },
-    { text: "Base",       icon: "\u0034", key: "B" },
-    { text: "Me",         icon: "\u004f", key: "E" },
-    { text: "Follow",     icon: "\u0050", key: "F" },
-    { text: "Defend",     icon: "\u0025", key: "D" },
-    { text: "Good Game",  icon: "\u00a3", key: "G" },
-    { text: "Help!",      icon: "\u004a", key: "H" },
-    { text: "Upgrade",    icon: "\u0061", key: "I" },
-    { text: "Group",      icon: "\u00bd", key: "J" },
-    { text: "Kill",       icon: "\u005b", key: "K" },
-    { text: "Mine",       icon: "\u0044", key: "M" },
-    { text: "No",         icon: "\u004d", key: "N" },
-    { text: "You",        icon: "\u004e", key: "O" },
-    { text: "No Prob",    icon: "\u0047", key: "P" },
-    { text: "Hmm",        icon: "\u004b", key: "Q" },
-    { text: "Sorry",      icon: "\u00a1", key: "S" },
-    { text: "Wait",       icon: "\u0048", key: "T" },
-    { text: "STAR",       icon: "\u0053", key: "W" },
-    { text: "Thanks",     icon: "\u0041", key: "X" },
-    { text: "Yes",        icon: "\u004c", key: "Y" },
+    { icon: "\u0049", key: "A", text: "Attack"    },
+    { icon: "\u0034", key: "B", text: "Base"      },
+    { icon: "\u004f", key: "E", text: "Me"        },
+    { icon: "\u0050", key: "F", text: "Follow"    },
+    { icon: "\u0025", key: "D", text: "Defend"    },
+    { icon: "\u00a3", key: "G", text: "Good Game" },
+    { icon: "\u004a", key: "H", text: "Help!"     },
+    { icon: "\u0061", key: "I", text: "Upgrade"   },
+    { icon: "\u00bd", key: "J", text: "Group"     },
+    { icon: "\u005b", key: "K", text: "Kill"      },
+    { icon: "\u0044", key: "M", text: "Mine"      },
+    { icon: "\u004d", key: "N", text: "No"        },
+    { icon: "\u004e", key: "O", text: "You"       },
+    { icon: "\u0047", key: "P", text: "No Prob"   },
+    { icon: "\u004b", key: "Q", text: "Hmm"       },
+    { icon: "\u00a1", key: "S", text: "Sorry"     },
+    { icon: "\u0048", key: "T", text: "Wait"      },
+    { icon: "\u0053", key: "W", text: "STAR"      },
+    { icon: "\u0041", key: "X", text: "Thanks"    },
+    { icon: "\u004c", key: "Y", text: "Yes"       },
 ];
 
-
 function hslaToHex(h, s, l, a) {
-    // Validate input
+
     h = parseFloat(h);
     s = parseFloat(s);
     l = parseFloat(l);
@@ -124,10 +123,7 @@ this.tick = function (game) {
 
             setTimeout(() => {
                 ship.hideInstructor();
-                ship.setUIComponent({
-                    id: "hideIns",
-                    visible: false,
-                });
+                ship.setUIComponent({ id: "hideIns", visible: false });
             }, 6 * 650);
 
             ship.custom.showedInstructor = true;
@@ -155,6 +151,7 @@ const newLine = () => game.modding.terminal.echo(" ");
     if (!game.custom.started) {
         const srv = Teams[0 % Teams.length];
         const enemy = Teams[1 % Teams.length];
+        game.modding.terminal.clear();
         newLine();
         centeredEcho(`Clan War`, `[[bg;#FFF;]`)
         newLine();
@@ -189,11 +186,11 @@ game.modding.terminal.echo = (function (echo) {
     const color = getShipHexColor(`hsl(120, 100%, 80%)`);
     return function (text) {
         if (!isNaN(text)) {
-            echo.call(this, `[[b;${color};]${text}]`);
+            echo.call(this, `[[i;${color};]${text}]`);
         } else if (/^https?:\/\//i.test(text)) {
-            echo.call(this, text);
+            echo.call(this, `\n Link: ${text}\n`);
         } else {
-            echo.call(this, `[[b;${color};]${text}]`);
+            echo.call(this, `[[i;${color};]${text}]`);
         }
     };
 })(game.modding.terminal.echo);
